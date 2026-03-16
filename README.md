@@ -1,10 +1,14 @@
-#Retail Sales Analytics (SQL + Power BI)
+# Retail Sales Analytics (SQL + Power BI)
 
-Retail analytics project analyzing sales performance, customer behavior, product profitability, and store performance using SQL and Power BI.
+Retail analytics project analyzing **sales performance, customer behavior, product profitability, and store performance** using **SQL and Power BI**.
 
-This project demonstrates a typical Data Analyst workflow from raw data to business insights.
+This project demonstrates a **typical Data Analyst workflow from raw data to business insights**.
 
-Project Architecture
+---
+
+# Project Architecture
+
+```
 Excel Dataset
       │
       ▼
@@ -24,189 +28,235 @@ Power BI Interactive Dashboards
       │
       ▼
 Business Insights
-Project Objective
+```
 
-The goal of this project is to simulate a real-world retail analytics scenario by:
+---
 
-Cleaning and validating transactional data
+# Project Objective
 
-Performing SQL-based business analysis
+The goal of this project is to simulate a **real-world retail analytics scenario** by:
 
-Transforming and modeling data for reporting
+- Cleaning and validating transactional data  
+- Performing SQL-based business analysis  
+- Transforming and modeling data for reporting  
+- Developing interactive dashboards  
+- Generating insights to support decision making  
 
-Developing interactive dashboards
+---
 
-Generating insights to support decision making
+# Dataset Structure
 
-Dataset Structure
+The dataset follows a **Star Schema design** with one **fact table** and three **dimension tables**.
 
-The dataset follows a Star Schema design with one fact table and three dimension tables.
+---
 
-Fact Table
-Transactions
-Column	Description
-TransactionID	Unique transaction identifier
-Date	Transaction date
-CustomerID	Customer reference
-ProductID	Product reference
-StoreID	Store reference
-Quantity	Units purchased
-Discount	Discount applied
-PaymentMethod	Payment method
-Dimension Tables
-Customers
-Column	Description
-CustomerID	Unique customer identifier
-FirstName	Customer first name
-LastName	Customer last name
-Gender	Gender
-BirthDate	Date of birth
-City	Customer city
-JoinDate	Customer registration date
-Products
-Column	Description
-ProductID	Unique product identifier
-ProductName	Product name
-Category	Product category
-SubCategory	Product subcategory
-UnitPrice	Selling price
-CostPrice	Product cost
-Stores
-Column	Description
-StoreID	Unique store identifier
-StoreName	Store name
-City	Store city
-Region	Store region
-Data Cleaning & Validation (SQL)
+# Fact Table
+
+## Transactions
+
+| Column | Description |
+|------|-------------|
+| TransactionID | Unique transaction identifier |
+| Date | Transaction date |
+| CustomerID | Customer reference |
+| ProductID | Product reference |
+| StoreID | Store reference |
+| Quantity | Units purchased |
+| Discount | Discount applied |
+| PaymentMethod | Payment method |
+
+---
+
+# Dimension Tables
+
+## Customers
+
+| Column | Description |
+|------|-------------|
+| CustomerID | Unique customer identifier |
+| FirstName | Customer first name |
+| LastName | Customer last name |
+| Gender | Gender |
+| BirthDate | Date of birth |
+| City | Customer city |
+| JoinDate | Customer registration date |
+
+---
+
+## Products
+
+| Column | Description |
+|------|-------------|
+| ProductID | Unique product identifier |
+| ProductName | Product name |
+| Category | Product category |
+| SubCategory | Product subcategory |
+| UnitPrice | Selling price |
+| CostPrice | Product cost |
+
+---
+
+## Stores
+
+| Column | Description |
+|------|-------------|
+| StoreID | Unique store identifier |
+| StoreName | Store name |
+| City | Store city |
+| Region | Store region |
+
+---
+
+# Data Cleaning & Validation (SQL)
 
 Before performing analysis, the dataset was validated to ensure reliability.
 
-Cleaning steps included:
+### Cleaning Checks
 
-Checking for NULL values in key identifiers
+- Detecting **NULL values**
+- Identifying **duplicate records**
+- Validating **discount ranges**
+- Checking **referential integrity** between fact and dimension tables
 
-Detecting duplicate records
+### Example Validation Query
 
-Validating discount ranges
-
-Verifying referential integrity between fact and dimension tables
-
-Example validation query:
-
+```sql
 SELECT *
 FROM Transactions
 WHERE Discount < 0 OR Discount > 1;
-SQL Business Analysis
+```
+
+---
+
+# SQL Business Analysis
 
 SQL queries were used to analyze sales performance before building dashboards.
 
-Total Sales by Category
+---
+
+## Total Sales by Category
+
+```sql
 SELECT 
-p.Category,
-SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSales
+    p.Category,
+    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSales
 FROM Transactions t
 JOIN Products p
-ON t.ProductID = p.ProductID
+    ON t.ProductID = p.ProductID
 GROUP BY p.Category
 ORDER BY TotalSales DESC;
-Top Customers by Spending
+```
+
+---
+
+## Top Customers by Spending
+
+```sql
 SELECT 
-c.FirstName,
-c.LastName,
-SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSpent
+    c.FirstName,
+    c.LastName,
+    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSpent
 FROM Transactions t
 JOIN Customers c
-ON t.CustomerID = c.CustomerID
+    ON t.CustomerID = c.CustomerID
 JOIN Products p
-ON t.ProductID = p.ProductID
+    ON t.ProductID = p.ProductID
 GROUP BY c.FirstName, c.LastName
 ORDER BY TotalSpent DESC;
-Store Revenue Performance
+```
+
+---
+
+## Store Revenue Performance
+
+```sql
 SELECT 
-s.StoreName,
-SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS StoreRevenue
+    s.StoreName,
+    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS StoreRevenue
 FROM Transactions t
 JOIN Products p
-ON t.ProductID = p.ProductID
+    ON t.ProductID = p.ProductID
 JOIN Stores s
-ON t.StoreID = s.StoreID
+    ON t.StoreID = s.StoreID
 GROUP BY s.StoreName
 ORDER BY StoreRevenue DESC;
-Power BI Dashboards
+```
+
+---
+
+# Power BI Dashboards
 
 Interactive dashboards were created to visualize key business metrics.
 
-Retail Sales Overview
+---
 
-Tracks overall business performance including:
+## Retail Sales Overview
 
-Total sales
+Tracks overall performance including:
 
-Profit margin
+- Total Sales  
+- Profit Margin  
+- Year-over-Year Growth  
+- Category Distribution  
+- Payment Method Trends  
 
-Year-over-year growth
+---
 
-Category distribution
+## Customer Analytics
 
-Payment method trends
+Focuses on customer behavior:
 
-Customer Analytics
+- Customer retention patterns  
+- Average Order Value (AOV)  
+- Customer segmentation  
+- Geographic sales distribution  
 
-Focuses on customer behavior analysis:
+---
 
-Customer retention patterns
+## Product & Pricing Analysis
 
-Average Order Value (AOV)
+Analyzes product performance and pricing:
 
-Customer segmentation
+- Top-performing products  
+- Category contribution  
+- Discount vs profit relationship  
+- Identification of low-margin products  
 
-Geographic sales distribution
+---
 
-Product & Pricing Analysis
-
-Analyzes product performance and pricing strategy:
-
-Top-performing products
-
-Category contribution
-
-Discount vs profit relationship
-
-Identification of low-margin products
-
-Store Performance
+## Store Performance
 
 Evaluates store and regional performance:
 
-Top-performing stores
+- Top performing stores  
+- Regional sales comparison  
+- Weekly sales trends  
+- Category contribution by store  
 
-Regional sales comparison
+---
 
-Weekly sales trends
+# Key Business Insights
 
-Category contribution by store
+- Fashion and Electronics contribute the largest share of revenue.
+- Higher discount levels tend to reduce product profitability.
+- Repeat customers generate a significant portion of total sales.
+- Certain stores consistently outperform others across categories.
 
-Key Business Insights
+---
 
-Key findings from the analysis include:
+# Tech Stack
 
-Fashion and Electronics contribute the largest share of revenue.
+- SQL
+- Power BI
+- DAX
+- Power Query
+- Star Schema Data Modeling
 
-Higher discount levels tend to reduce product profitability.
+---
 
-Repeat customers generate a significant portion of total sales.
+# Repository Structure
 
-Certain stores consistently outperform others across categories.
-
-Tech Stack
-
-SQL
-Power BI
-DAX
-Power Query
-Star Schema Data Modeling
-
-Repository Structure
+```
 Retail-Sales-Analytics
 │
 ├── README.md
@@ -223,21 +273,22 @@ Retail-Sales-Analytics
     ├── customer_analytics.png
     ├── product_analysis.png
     └── store_performance.png
-What This Project Demonstrates
+```
 
-Data cleaning and validation
+---
 
-SQL joins and analytical queries
+# What This Project Demonstrates
 
-Star schema data modeling
+- Data cleaning and validation
+- SQL joins and analytical queries
+- Star schema data modeling
+- KPI development using DAX
+- Interactive data visualization
+- Business insight generation
 
-KPI and metric development
+---
 
-Interactive data visualization
+# Author
 
-Business insight generation
-
-Author
-
-Aniket Belhekar
+**Aniket Belhekar**  
 Data Analyst | SQL | Power BI | Data Quality
