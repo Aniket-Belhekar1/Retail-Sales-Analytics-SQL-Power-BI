@@ -1,4 +1,4 @@
-Retail Sales Analytics (SQL + Power BI)
+##Retail Sales Analytics (SQL + Power BI)
 
 Retail analytics project analyzing sales performance, customer behavior, product profitability, and store performance using SQL and Power BI.
 
