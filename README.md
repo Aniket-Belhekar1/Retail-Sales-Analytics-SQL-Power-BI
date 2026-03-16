@@ -200,7 +200,8 @@ Tracks overall performance including:
 - Category Distribution  
 - Payment Method Trends
 
-![Retail Sales Overview](sales_overview.png)
+![Retail Sales Overview](Snapshots/sales_overview.png)
+
 ---
 
 ## Customer Analytics
