@@ -200,7 +200,7 @@ Tracks overall performance including:
 - Category Distribution  
 - Payment Method Trends
 
-![Retail Sales Overview]([Snapshots/sales_overview.png](https://github.com/Aniket-Belhekar1/Retail-Sales-Analytics-SQL-Power-BI/blob/f163bf2e71b6b9a0bdb79f954df0c6b9f960a27e/Snapshots/Snapshot%20-%201.png))
+![Retail Sales Overview](Snapshots/sales_overview.png](https://github.com/Aniket-Belhekar1/Retail-Sales-Analytics-SQL-Power-BI/blob/f163bf2e71b6b9a0bdb79f954df0c6b9f960a27e/Snapshots/Snapshot%20-%201.png)
 
 ---
 
