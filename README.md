@@ -136,3 +136,15 @@ This project demonstrates:
 ---
 
 ## 📂 Project Structure
+├── SQL/
+│ ├── Data Cleaning Checks.sql
+│ ├── Business Analysis Queries.sql
+├── Power BI/
+│ ├── Retail Sales Dashboard.pbix
+├── README.md
+
+---
+
+## 🚀 Key Takeaway
+This project reflects a complete analytical approach:
+> Not just building dashboards, but **using data to drive business decisions**.
