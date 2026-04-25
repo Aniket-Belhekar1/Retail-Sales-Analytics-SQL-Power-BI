@@ -136,13 +136,16 @@ This project demonstrates:
 ---
 
 ## 📂 Project Structure
+
+```
 Retail-Sales-Analytics/
 ├── SQL/
-│ ├── Data Cleaning Checks.sql
-│ └── Business Analysis Queries.sql
+│   ├── Data Cleaning Checks.sql
+│   └── Business Analysis Queries.sql
 ├── Power BI/
-│ └── Retail Sales Dashboard.pbix
+│   └── Retail Sales Dashboard.pbix
 └── README.md
+```
 
 ---
 
