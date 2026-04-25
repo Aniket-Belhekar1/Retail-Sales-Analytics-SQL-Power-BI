@@ -1,296 +1,138 @@
-# Retail Sales Analytics (SQL + Power BI)
+# 🛒 Retail Sales Analytics (SQL + Power BI)
 
-Retail analytics project analyzing **sales performance, customer behavior, product profitability, and store performance** using **SQL and Power BI**.
-
-This project demonstrates a **typical Data Analyst workflow from raw data to business insights**.
-
----
-
-# Project Architecture
-
-```
-Excel Dataset
-      │
-      ▼
-SQL Data Cleaning & Validation
-      │
-      ▼
-SQL Business Analysis
-      │
-      ▼
-Power Query Data Transformation
-      │
-      ▼
-DAX KPI Modeling
-      │
-      ▼
-Power BI Interactive Dashboards
-      │
-      ▼
-Business Insights
-```
+## 📌 Overview
+This project analyzes retail sales data to identify **revenue drivers, customer behavior patterns, and margin inefficiencies**.  
+The goal is to demonstrate an **end-to-end analytical workflow**: data validation → transformation → analysis → insight generation → business recommendations.
 
 ---
 
-# Project Objective
-
-The goal of this project is to simulate a **real-world retail analytics scenario** by:
-
-- Cleaning and validating transactional data  
-- Performing SQL-based business analysis  
-- Transforming and modeling data for reporting  
-- Developing interactive dashboards  
-- Generating insights to support decision making  
+## 🎯 Business Objective
+Analyze multi-dimensional retail data to:
+- Identify top-performing categories, products, and stores
+- Understand customer behavior and retention patterns
+- Detect pricing and discount-related margin issues
+- Support data-driven business decisions
 
 ---
 
-# Dataset Structure
-
-The dataset follows a **Star Schema design** with one **fact table** and three **dimension tables**.
-
----
-
-# Fact Table
-
-## Transactions
-
-| Column | Description |
-|------|-------------|
-| TransactionID | Unique transaction identifier |
-| Date | Transaction date |
-| CustomerID | Customer reference |
-| ProductID | Product reference |
-| StoreID | Store reference |
-| Quantity | Units purchased |
-| Discount | Discount applied |
-| PaymentMethod | Payment method |
+## 🛠️ Tools & Technologies
+- **SQL**: Data cleaning, validation, transformation, and analysis  
+- **Power BI**: Data modeling, DAX, and dashboard visualization  
+- **Power Query**: Data transformation and shaping  
 
 ---
 
-# Dimension Tables
+## 🧱 Data Workflow
 
-## Customers
+### 1. Data Validation (SQL)
+- Null checks and missing value handling  
+- Duplicate detection  
+- Referential integrity validation (PK/FK relationships)  
 
-| Column | Description |
-|------|-------------|
-| CustomerID | Unique customer identifier |
-| FirstName | Customer first name |
-| LastName | Customer last name |
-| Gender | Gender |
-| BirthDate | Date of birth |
-| City | Customer city |
-| JoinDate | Customer registration date |
+### 2. Data Transformation
+- Structured raw data into analysis-ready tables  
+- Created unified dataset combining transactions, customers, and products  
 
----
-
-## Products
-
-| Column | Description |
-|------|-------------|
-| ProductID | Unique product identifier |
-| ProductName | Product name |
-| Category | Product category |
-| SubCategory | Product subcategory |
-| UnitPrice | Selling price |
-| CostPrice | Product cost |
+### 3. Data Modeling (Power BI)
+- Star schema model  
+- Defined relationships between fact and dimension tables  
+- Created calculated measures using DAX  
 
 ---
 
-## Stores
+## 📊 Dashboard Overview
 
-| Column | Description |
-|------|-------------|
-| StoreID | Unique store identifier |
-| StoreName | Store name |
-| City | Store city |
-| Region | Store region |
+### 1. Sales Overview
+- Total Sales: **5.1M**
+- Total Profit: **1.36M**
+- Avg Margin: **26.8%**
+- YoY Growth: **-27.4%**
 
----
-
-# Data Cleaning & Validation (SQL)
-
-Before performing analysis, the dataset was validated to ensure reliability.
-
-### Cleaning Checks
-
-- Detecting **NULL values**
-- Identifying **duplicate records**
-- Validating **discount ranges**
-- Checking **referential integrity** between fact and dimension tables
-
-### Example Validation Query
-
-```sql
-SELECT *
-FROM Transactions
-WHERE Discount < 0 OR Discount > 1;
-```
+Key Analysis:
+- Monthly sales trends
+- Category-level performance
+- Store-level comparison
+- Payment method distribution
 
 ---
 
-# SQL Business Analysis
+### 2. Customer Analytics
+- Retention Rate: ~90–100%
+- Average Order Value (AOV): ~2900
+- Customer segmentation based on:
+  - Recency (days since last purchase)
+  - Frequency (number of transactions)
 
-SQL queries were used to analyze sales performance before building dashboards.
-
----
-
-## Total Sales by Category
-
-```sql
-SELECT 
-    p.Category,
-    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSales
-FROM Transactions t
-JOIN Products p
-    ON t.ProductID = p.ProductID
-GROUP BY p.Category
-ORDER BY TotalSales DESC;
-```
+Key Analysis:
+- New vs returning customers
+- High-value vs at-risk customers
+- Top spending customers
+- Geographic distribution
 
 ---
 
-## Top Customers by Spending
+### 3. Store Performance
+- Top-performing stores identified
+- Regional sales contribution analysis
+- Weekly sales trends (clear weekend uplift)
 
-```sql
-SELECT 
-    c.FirstName,
-    c.LastName,
-    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS TotalSpent
-FROM Transactions t
-JOIN Customers c
-    ON t.CustomerID = c.CustomerID
-JOIN Products p
-    ON t.ProductID = p.ProductID
-GROUP BY c.FirstName, c.LastName
-ORDER BY TotalSpent DESC;
-```
+Key Analysis:
+- Store-level revenue comparison
+- Region-wise contribution (East leading)
+- Day-wise sales behavior
 
 ---
 
-## Store Revenue Performance
+### 4. Product & Pricing Analysis
+- Category contribution:
+  - Fashion (~45%)
+  - Electronics (~42%)
+  - Groceries (~12%)
 
-```sql
-SELECT 
-    s.StoreName,
-    SUM(t.Quantity * p.UnitPrice * (1 - t.Discount)) AS StoreRevenue
-FROM Transactions t
-JOIN Products p
-    ON t.ProductID = p.ProductID
-JOIN Stores s
-    ON t.StoreID = s.StoreID
-GROUP BY s.StoreName
-ORDER BY StoreRevenue DESC;
-```
+Key Analysis:
+- Top-selling products
+- Margin vs discount relationship
+- Product-level profitability
 
 ---
 
-# Power BI Dashboards
+## 🔍 Key Insights
 
-Interactive dashboards were created to visualize key business metrics.
-
----
-
-## Retail Sales Overview
-
-Tracks overall performance including:
-
-- Total Sales  
-- Profit Margin  
-- Year-over-Year Growth  
-- Category Distribution  
-- Payment Method Trends
-
-![Retail Sales Overview](Snapshots/sales_overview.png)
+- **Fashion and Electronics contribute ~85% of total revenue**, making them core business drivers  
+- **Groceries underperform (~12%)**, indicating potential issues in demand or positioning  
+- **Sales peak in April and show consistent weekend uplift**, highlighting temporal demand patterns  
+- **High-value customers cluster within low recency (<30 days) and high frequency (10–20 transactions)**  
+- **Discounts above ~8% correlate with declining profit margins**, indicating pricing inefficiencies  
 
 ---
 
-## Customer Analytics
+## 💡 Business Recommendations
 
-Focuses on customer behavior:
-
-- Customer retention patterns  
-- Average Order Value (AOV)  
-- Customer segmentation  
-- Geographic sales distribution  
-
----
-
-## Product & Pricing Analysis
-
-Analyzes product performance and pricing:
-
-- Top-performing products  
-- Category contribution  
-- Discount vs profit relationship  
-- Identification of low-margin products  
+- Focus inventory and marketing efforts on **Fashion and Electronics**
+- Optimize **discount strategy** to prevent margin erosion
+- Target **high-value customers** with retention campaigns
+- Investigate underperformance of **Groceries category**
+- Align promotions with **weekend demand spikes**
 
 ---
 
-## Store Performance
+## 🧮 SQL Contribution
 
-Evaluates store and regional performance:
-
-- Top performing stores  
-- Regional sales comparison  
-- Weekly sales trends  
-- Category contribution by store  
+- Used **joins** to combine transaction, product, and customer datasets  
+- Applied **aggregations** for revenue, profit, and category analysis  
+- Used **window functions (RANK, ROW_NUMBER)** to identify top customers and products  
+- Built **data validation checks** (nulls, duplicates, integrity constraints)  
 
 ---
 
-# Key Business Insights
+## 📈 Project Value
 
-- Fashion and Electronics contribute the largest share of revenue.
-- Higher discount levels tend to reduce product profitability.
-- Repeat customers generate a significant portion of total sales.
-- Certain stores consistently outperform others across categories.
-
----
-
-# Tech Stack
-
-- SQL
-- Power BI
-- DAX
-- Power Query
-- Star Schema Data Modeling
+This project demonstrates:
+- Strong **data validation and structuring capability**
+- Ability to **analyze business data using SQL**
+- Skill in building **interactive dashboards using Power BI**
+- Capability to convert **raw data into actionable insights**
 
 ---
 
-# Repository Structure
-
-```
-Retail-Sales-Analytics
-│
-├── README.md
-│
-├── SQL
-│   ├── data_cleaning.sql
-│   └── business_analysis.sql
-│
-├── PowerBI
-│   └── Retail_Sales_Dashboard.pbix
-│
-└── Snapshots
-    ├── sales_overview.png
-    ├── customer_analytics.png
-    ├── product_analysis.png
-    └── store_performance.png
-```
-
----
-
-# What This Project Demonstrates
-
-- Data cleaning and validation
-- SQL joins and analytical queries
-- Star schema data modeling
-- KPI development using DAX
-- Interactive data visualization
-- Business insight generation
-
----
-
-# Author
-
-**Aniket Belhekar**  
-Data Analyst | SQL | Power BI | Data Quality
+## 📂 Project Structure
