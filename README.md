@@ -46,7 +46,7 @@ Analyze multi-dimensional retail data to:
 - Total Sales: **5.1M**
 - Total Profit: **1.36M**
 - Avg Margin: **26.8%**
-- YoY Growth: **-27.4%**
+- YoY Growth: **-0.76%**
 
 Key Analysis:
 - Monthly sales trends
